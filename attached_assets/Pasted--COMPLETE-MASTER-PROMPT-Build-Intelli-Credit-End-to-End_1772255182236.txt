@@ -1,0 +1,416 @@
+# COMPLETE MASTER PROMPT – Build Intelli-Credit End-to-End in Replit (Single Prompt)
+
+## ROLE
+
+You are a senior AI architect, fintech product designer, data scientist, and full-stack engineer. Your task is to help a beginner build a complete end-to-end **AI-powered Corporate Credit Decisioning Engine** called **Intelli-Credit** using **Replit only**, from zero to a working hackathon-ready prototype.
+
+You must:
+
+* Give full architecture, code, folder structure, and implementation.
+* Use only FREE tools, open-source models, and free tiers.
+* Ensure everything runs inside Replit.
+* Use PostgreSQL free tier (Neon or Supabase).
+* Use a free LLM API (OpenRouter or similar).
+* Do NOT include deployment, Docker, or paid services.
+* Focus on Indian corporate lending context.
+* Provide beginner-friendly explanations.
+* Generate production-style modular code.
+
+---
+
+# PROJECT OBJECTIVE
+
+Build a system that:
+
+1. Ingests structured and unstructured corporate financial data.
+2. Extracts insights from PDFs and statements.
+3. Performs automated research on promoters, sector, and litigation.
+4. Generates an explainable credit risk score.
+5. Recommends loan amount and interest rate.
+6. Produces a professional Credit Appraisal Memo (CAM).
+
+---
+
+# SYSTEM ARCHITECTURE
+
+Frontend (React + Tailwind in Replit)
+→ FastAPI backend
+→ PostgreSQL (Neon free tier)
+→ Local file storage
+→ NLP + OCR pipeline
+→ RAG research engine
+→ ML risk scoring
+→ Explainability
+→ CAM generator
+
+---
+
+# COMPLETE TECH STACK (FREE ONLY)
+
+## Frontend
+
+* React
+* Tailwind CSS
+* Typescript
+* Recharts
+
+## Backend
+
+* Python
+* FastAPI
+
+## Database
+
+* PostgreSQL (Neon)
+* pgvector
+
+## AI
+
+* HuggingFace
+* Transformers
+* LangChain
+
+## LLM
+
+* OpenRouter free API
+
+## OCR
+
+* Tesseract
+
+## Vector DB
+
+* FAISS
+
+## ML
+
+* Scikit-learn
+* SHAP
+
+## Data
+
+* Pandas
+
+---
+
+# PROJECT FOLDER STRUCTURE
+
+Create a simple full-stack structure inside Replit using **two main folders only**:
+
+```
+backend/
+frontend/
+```
+
+## Detailed Structure
+
+```
+backend/
+  main.py
+  config.py
+  database.py
+  requirements.txt
+  models/
+  routers/
+  services/
+  utils/
+  ml/
+  ocr/
+  rag/
+  cam/
+  data/
+
+frontend/
+  package.json
+  tailwind.config.js
+  src/
+    components/
+    pages/
+    services/
+    hooks/
+    utils/
+    App.tsx
+    main.tsx
+```
+
+Both backend and frontend must run inside the same Replit workspace.
+
+* Backend runs on FastAPI.
+* Frontend runs on React + Tailwind.
+* Use separate ports.
+* Connect frontend to backend using REST APIs.
+
+intelli-credit/
+backend/
+main.py
+config.py
+database.py
+models/
+services/
+routers/
+utils/
+frontend/
+src/
+components/
+pages/
+data/
+notebooks/
+requirements.txt
+
+```
+
+---
+
+# DATABASE DESIGN (PostgreSQL)
+
+Tables:
+- companies
+- financials
+- gst_data
+- bank_transactions
+- litigation
+- promoter
+- risk_scores
+- cam_reports
+
+Add pgvector for embeddings.
+
+---
+
+# CORE MODULES
+
+## MODULE 1 – AUTH & COMPANY MANAGEMENT
+Build APIs for:
+- Register credit officer
+- Login
+- Create company profile
+
+---
+
+## MODULE 2 – DATA INGESTION
+
+Build upload APIs for:
+- GST returns
+- Bank statements
+- ITR
+- Annual reports
+- Rating reports
+
+Store metadata in PostgreSQL.
+
+---
+
+## MODULE 3 – STRUCTURED DATA INTELLIGENCE
+
+Tasks:
+- Clean financial data
+- Compute ratios:
+  - Revenue growth
+  - EBITDA
+  - Leverage
+  - DSCR
+
+- Detect:
+  - Circular trading
+  - Cash mismatch
+
+---
+
+## MODULE 4 – OCR + DOCUMENT PARSING
+
+Use:
+- Tesseract
+
+Extract:
+- Promoter info
+- Legal risks
+- Financial commitments
+
+Apply NLP:
+- Named entity recognition
+- Risk keyword detection
+
+---
+
+## MODULE 5 – RESEARCH AGENT
+
+Build automated intelligence:
+- Scrape Indian news
+- Search MCA
+- Litigation tracking
+
+Use RAG:
+- Embeddings
+- FAISS
+
+Query LLM to summarize risks.
+
+---
+
+## MODULE 6 – PRIMARY INSIGHTS
+
+Build UI for credit officer:
+- Site visit notes
+- Management quality
+
+Convert qualitative input into risk features.
+
+---
+
+## MODULE 7 – CREDIT RISK FEATURE ENGINEERING
+
+Financial:
+- Revenue
+- Profitability
+- Liquidity
+
+Fraud:
+- GST mismatch
+- Fake invoicing
+
+Promoter:
+- Litigation
+
+Sector:
+- Regulatory risks
+
+Behavioral:
+- Filing delays
+
+Collateral:
+- Asset quality
+
+---
+
+## MODULE 8 – ML RISK MODEL
+
+Build:
+- Logistic regression
+- Gradient boosting
+
+Output:
+- Probability of default
+- Risk grade
+
+---
+
+## MODULE 9 – EXPLAINABILITY
+
+Use SHAP:
+- Feature importance
+- Risk drivers
+
+Generate human-readable explanation.
+
+---
+
+## MODULE 10 – LOAN RECOMMENDATION
+
+Based on score:
+- Loan eligibility
+- Limit
+- Interest rate
+
+Include explainable logic.
+
+---
+
+## MODULE 11 – CAM GENERATOR
+
+Generate professional memo:
+- Five Cs:
+  - Character
+  - Capacity
+  - Capital
+  - Collateral
+  - Conditions
+
+Export PDF.
+
+---
+
+## MODULE 12 – FRONTEND DASHBOARD
+
+Screens:
+- Login
+- Company search
+- Upload
+- Risk dashboard
+- Fraud alerts
+- Research panel
+- CAM download
+
+Charts:
+- Financial
+- Risk
+
+---
+
+## MODULE 13 – DEMO DATASET
+
+Generate synthetic Indian corporate dataset:
+- GST
+- Bank
+- Financials
+
+Download annual reports of:
+- MSMEs
+- NBFC
+
+Create fraud scenarios.
+
+---
+
+## MODULE 14 – UI DESIGN
+
+Modern fintech look:
+- Clean
+- Minimal
+- Risk colors
+
+---
+
+## MODULE 15 – TESTING
+
+Test:
+- Parsing
+- Model
+- End-to-end flow
+
+---
+
+# FINAL OUTPUT
+
+Working Intelli-Credit prototype:
+- Upload company
+- Generate risk score
+- Create CAM
+- Explain decisions
+
+---
+
+# HACKATHON SUCCESS STRATEGY
+
+Focus on:
+- Accuracy
+- Explainability
+- Indian relevance
+
+Demo:
+- Upload
+- Risk
+- CAM
+
+---
+
+# INSTRUCTIONS TO AI
+
+Now guide the user to implement this full system step-by-step with code, commands, and datasets. Always provide:
+- Folder structure
+- Code
+- Explanation
+- Next steps.
+
+Start with setting up the Replit workspace, PostgreSQL connection, and backend skeleton.
+
+```
