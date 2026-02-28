@@ -91,6 +91,8 @@ export async function setupAuth(app: Express) {
           config,
           scope: "openid email profile offline_access",
           callbackURL: `https://${domain}/api/callback`,
+          client_id: process.env.REPL_ID!,
+          client_secret: process.env.REPL_ID!,
         },
         verify
       );
