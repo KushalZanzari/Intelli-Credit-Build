@@ -6,11 +6,16 @@ export function useDocuments(companyId: number) {
   return useQuery<Document[]>({
     queryKey: [`/api/companies/${companyId}/documents`],
     queryFn: async () => {
-      const res = await fetch(`/api/companies/${companyId}/documents`, { credentials: "include" });
+      const res = await fetch(`/api/companies/${companyId}/documents`);
       if (!res.ok) throw new Error("Failed to fetch documents");
       return res.json();
     },
     enabled: !!companyId,
+    refetchInterval: (query) => {
+      const data = query.state.data as Document[] | undefined;
+      if (data?.some((d) => d.status === "analyzing")) return 3000;
+      return false;
+    },
   });
 }
 
@@ -23,18 +28,16 @@ export function useUploadDocument() {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("type", type);
-      
       const res = await fetch(`/api/companies/${companyId}/documents`, {
         method: "POST",
         body: formData,
-        credentials: "include",
       });
       if (!res.ok) throw new Error("Upload failed");
       return res.json();
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: [`/api/companies/${variables.companyId}/documents`] });
-      toast({ title: "Uploaded", description: "Document uploaded successfully." });
+      toast({ title: "Uploaded", description: "AI is now parsing the document..." });
     },
     onError: (err) => {
       toast({ title: "Upload Error", description: err.message, variant: "destructive" });

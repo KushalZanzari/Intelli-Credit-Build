@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "TLkzqdfKPnetLaOM6z8mS"
+uri = "file://README.md"
+type = "text"
+title = "IntelliCredit — Complete Guide & README"

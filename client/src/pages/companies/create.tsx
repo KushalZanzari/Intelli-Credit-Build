@@ -10,16 +10,19 @@ import { Building2, ArrowLeft } from "lucide-react";
 export default function CreateCompany() {
   const [, setLocation] = useLocation();
   const createMutation = useCreateCompany();
-  const [formData, setFormData] = useState({ name: "", cin: "", industry: "", address: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    cin: "",
+    industry: "",
+    address: "",
+    promoters: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name) return;
-    
     createMutation.mutate(formData, {
-      onSuccess: (data) => {
-        setLocation(`/companies/${data.id}`);
-      }
+      onSuccess: (data) => setLocation(`/companies/${data.id}`),
     });
   };
 
@@ -35,65 +38,86 @@ export default function CreateCompany() {
           <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4">
             <Building2 className="w-6 h-6" />
           </div>
-          <CardTitle className="text-3xl font-display font-bold">Add New Company</CardTitle>
-          <CardDescription className="text-base text-muted-foreground">Enter basic details to create a new profile for analysis.</CardDescription>
+          <CardTitle className="text-3xl font-bold">Add New Company</CardTitle>
+          <CardDescription className="text-base text-muted-foreground">
+            Enter company details to create a profile for credit analysis.
+          </CardDescription>
         </CardHeader>
         <CardContent className="px-8 pb-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-foreground font-semibold">Company Name <span className="text-destructive">*</span></Label>
-              <Input 
-                id="name" 
+              <Label htmlFor="name" className="font-semibold">
+                Company Name <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                id="name"
                 value={formData.name}
-                onChange={e => setFormData({...formData, name: e.target.value})}
-                placeholder="e.g. Acme Corp"
-                className="h-12 rounded-xl bg-muted/30 border-border/50 focus:border-primary focus:ring-primary/20"
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                placeholder="e.g. Reliance Industries Ltd"
+                className="h-12 rounded-xl bg-muted/30"
                 required
+                data-testid="input-company-name"
               />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="cin" className="text-foreground font-semibold">CIN Number</Label>
-                <Input 
-                  id="cin" 
+                <Label htmlFor="cin" className="font-semibold">CIN Number</Label>
+                <Input
+                  id="cin"
                   value={formData.cin}
-                  onChange={e => setFormData({...formData, cin: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, cin: e.target.value })}
                   placeholder="e.g. L12345MH2000PLC123456"
-                  className="h-12 rounded-xl bg-muted/30 border-border/50"
+                  className="h-12 rounded-xl bg-muted/30"
+                  data-testid="input-cin"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="industry" className="text-foreground font-semibold">Industry</Label>
-                <Input 
-                  id="industry" 
+                <Label htmlFor="industry" className="font-semibold">Industry / Sector</Label>
+                <Input
+                  id="industry"
                   value={formData.industry}
-                  onChange={e => setFormData({...formData, industry: e.target.value})}
-                  placeholder="e.g. Manufacturing"
-                  className="h-12 rounded-xl bg-muted/30 border-border/50"
+                  onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                  placeholder="e.g. Manufacturing, NBFC, IT Services"
+                  className="h-12 rounded-xl bg-muted/30"
+                  data-testid="input-industry"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="address" className="text-foreground font-semibold">Registered Address</Label>
-              <Input 
-                id="address" 
+              <Label htmlFor="promoters" className="font-semibold">Key Promoters / Directors</Label>
+              <Input
+                id="promoters"
+                value={formData.promoters}
+                onChange={(e) => setFormData({ ...formData, promoters: e.target.value })}
+                placeholder="e.g. Mukesh Ambani (CMD), Nita Ambani (Director)"
+                className="h-12 rounded-xl bg-muted/30"
+                data-testid="input-promoters"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="address" className="font-semibold">Registered Address</Label>
+              <Input
+                id="address"
                 value={formData.address}
-                onChange={e => setFormData({...formData, address: e.target.value})}
-                placeholder="Full address..."
-                className="h-12 rounded-xl bg-muted/30 border-border/50"
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                placeholder="Full registered address..."
+                className="h-12 rounded-xl bg-muted/30"
+                data-testid="input-address"
               />
             </div>
 
             <div className="pt-4 flex justify-end">
-              <Button 
-                type="submit" 
-                size="lg" 
+              <Button
+                type="submit"
+                size="lg"
                 disabled={createMutation.isPending || !formData.name}
-                className="rounded-xl px-8 shadow-lg shadow-primary/25 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                className="rounded-xl px-8 shadow-lg shadow-primary/25"
+                data-testid="button-create-company"
               >
-                {createMutation.isPending ? "Creating..." : "Create Profile"}
+                {createMutation.isPending ? "Creating..." : "Create Profile →"}
               </Button>
             </div>
           </form>

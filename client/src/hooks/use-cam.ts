@@ -6,7 +6,7 @@ export function useCamReport(companyId: number) {
   return useQuery<CamReport | null>({
     queryKey: [`/api/companies/${companyId}/cam`],
     queryFn: async () => {
-      const res = await fetch(`/api/companies/${companyId}/cam`, { credentials: "include" });
+      const res = await fetch(`/api/companies/${companyId}/cam`);
       if (!res.ok) throw new Error("Failed to fetch CAM report");
       return res.json();
     },
@@ -22,14 +22,14 @@ export function useGenerateCam() {
     mutationFn: async (companyId: number) => {
       const res = await fetch(`/api/companies/${companyId}/cam/generate`, {
         method: "POST",
-        credentials: "include",
+        headers: { "Content-Type": "application/json" },
       });
       if (!res.ok) throw new Error("Failed to generate CAM report");
-      return res.json();
+      return res.json() as Promise<CamReport>;
     },
     onSuccess: (_, companyId) => {
       queryClient.invalidateQueries({ queryKey: [`/api/companies/${companyId}/cam`] });
-      toast({ title: "Generated", description: "CAM Report generated successfully." });
+      toast({ title: "CAM Generated", description: "Credit Appraisal Memo is ready for review." });
     },
     onError: (err) => {
       toast({ title: "Error", description: err.message, variant: "destructive" });
