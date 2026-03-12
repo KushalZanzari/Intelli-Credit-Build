@@ -1,0 +1,87 @@
+[1G[0K⠙[1G[0K
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+[1G[0K⠙[1G[0K6:15:20 AM [express] serving on port 5000
+6:15:28 AM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+6:15:42 AM [express] GET /api/login 302 in 24ms
+6:15:45 AM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:16:56 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/index.css[22m
+6:16:57 AM [express] GET /api/companies 200 in 12ms :: [{"id":1,"name":"TechNova India Pvt Ltd","cin":"U72900MH2019PTC123456","industry":"Software Services","address":"Andheri East, Mumbai","createdAt":"2026-02-28T05:12:11.622Z"},{"id":2,"name":"Sunrise Manufacturing","cin":"U27100DL2010PTC098765","industry":"Manufacturing","address":"Okhla Industrial Estate, Delhi","createdAt":"2026-02-28T05:12:11.669Z"}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:17:14 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/layout/app-layout.tsx, /src/index.css[22m
+6:17:26 AM [express] GET /api/companies/1 200 in 14ms :: {"id":1,"name":"TechNova India Pvt Ltd","cin":"U72900MH2019PTC123456","industry":"Software Services","address":"Andheri East, Mumbai","createdAt":"2026-02-28T05:12:11.622Z"}
+6:17:26 AM [express] GET /api/companies/1/financials 200 in 5ms :: [{"id":1,"companyId":1,"year":2023,"revenue":"5000000","ebitda":"1200000","netProfit":"800000","totalDebt":"2000000","equity":"3000000","createdAt":"2026-02-28T05:12:11.656Z"},{"id":2,"companyId":1,"year":2022,"revenue":"4000000","ebitda":"900000","netProfit":"500000","totalDebt":"2500000","equity":"2200000","createdAt":"2026-02-28T05:12:11.663Z"}]
+6:17:30 AM [express] GET /api/companies/1/documents 200 in 3ms :: []
+6:17:36 AM [express] GET /api/companies/1/cam 200 in 4ms
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:18:53 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.

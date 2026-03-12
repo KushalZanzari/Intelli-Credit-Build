@@ -1,26 +1,26 @@
 import type { Express } from "express";
 import { type Server } from "http";
 import { storage } from "./storage";
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 import { z } from "zod";
 import multer from "multer";
 
-const openai = new OpenAI({
-  apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
-  baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
 async function askAI(prompt: string, json = false): Promise<string> {
   try {
-    const res = await openai.chat.completions.create({
-      model: "gpt-4.1",
-      messages: [{ role: "user", content: prompt }],
-      ...(json ? { response_format: { type: "json_object" } } : {}),
+    const res = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+      config: json ? { responseMimeType: "application/json" } : {},
     });
-    return res.choices[0].message.content || "";
-  } catch {
+    return res.text || "";
+  } catch (e) {
+    console.error("AI Generation Error", e);
     return "";
   }
 }
@@ -137,7 +137,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
 Company: ${company?.name} (${company?.industry})
 GST Documents available: ${gstDocs.length} files
 Bank Statement Documents: ${bankDocs.length} files
-Financial Summary: ${financials.map(f => `FY${f.year} Revenue ₹${(Number(f.revenue)/100000).toFixed(1)}L, Net Profit ₹${(Number(f.netProfit)/100000).toFixed(1)}L`).join("; ")}
+Financial Summary: ${financials.map(f => `FY${f.year} Revenue ₹${(Number(f.revenue) / 100000).toFixed(1)}L, Net Profit ₹${(Number(f.netProfit) / 100000).toFixed(1)}L`).join("; ")}
 
 Simulate a comprehensive GST vs Bank Statement cross-verification analysis. Generate a realistic but simulated analysis as if you have processed real documents.
 
@@ -281,7 +281,7 @@ Company: ${company?.name}
 Industry: ${company?.industry}
 CIN: ${company?.cin}
 Promoters: ${company?.promoters || "Unknown"}
-Financial health: Revenue ₹${financials[0] ? (Number(financials[0].revenue)/10000000).toFixed(2) : "N/A"} Cr (FY${financials[0]?.year || "N/A"})
+Financial health: Revenue ₹${financials[0] ? (Number(financials[0].revenue) / 10000000).toFixed(2) : "N/A"} Cr (FY${financials[0]?.year || "N/A"})
 
 Conduct simulated research across these areas and return realistic findings as JSON:
 {
@@ -358,7 +358,7 @@ Conduct simulated research across these areas and return realistic findings as J
       const webResearchList = await storage.getWebResearch(companyId);
 
       const finContext = financials.map(f =>
-        `FY${f.year}: Revenue ₹${(Number(f.revenue)/10000000).toFixed(2)}Cr, EBITDA ₹${(Number(f.ebitda)/10000000).toFixed(2)}Cr, Net Profit ₹${(Number(f.netProfit)/10000000).toFixed(2)}Cr, Debt ₹${(Number(f.totalDebt)/10000000).toFixed(2)}Cr, Equity ₹${(Number(f.equity)/10000000).toFixed(2)}Cr`
+        `FY${f.year}: Revenue ₹${(Number(f.revenue) / 10000000).toFixed(2)}Cr, EBITDA ₹${(Number(f.ebitda) / 10000000).toFixed(2)}Cr, Net Profit ₹${(Number(f.netProfit) / 10000000).toFixed(2)}Cr, Debt ₹${(Number(f.totalDebt) / 10000000).toFixed(2)}Cr, Equity ₹${(Number(f.equity) / 10000000).toFixed(2)}Cr`
       ).join("\n");
 
       const qualContext = notes.length > 0 ? notes.map(n => `- ${n.note} (Impact: ${n.scoreImpact > 0 ? '+' : ''}${n.scoreImpact})`).join("\n") : "None";
@@ -403,7 +403,7 @@ Question: ${query}`);
       const gst = await storage.getGstAnalysis(companyId);
 
       const finSummary = financials.map(f =>
-        `FY${f.year}: Revenue ₹${(Number(f.revenue)/10000000).toFixed(2)}Cr, EBITDA ₹${(Number(f.ebitda)/10000000).toFixed(2)}Cr, Net Profit ₹${(Number(f.netProfit)/10000000).toFixed(2)}Cr, Debt ₹${(Number(f.totalDebt)/10000000).toFixed(2)}Cr, Equity ₹${(Number(f.equity)/10000000).toFixed(2)}Cr, D/E: ${(Number(f.totalDebt)/Math.max(Number(f.equity),1)).toFixed(2)}x`
+        `FY${f.year}: Revenue ₹${(Number(f.revenue) / 10000000).toFixed(2)}Cr, EBITDA ₹${(Number(f.ebitda) / 10000000).toFixed(2)}Cr, Net Profit ₹${(Number(f.netProfit) / 10000000).toFixed(2)}Cr, Debt ₹${(Number(f.totalDebt) / 10000000).toFixed(2)}Cr, Equity ₹${(Number(f.equity) / 10000000).toFixed(2)}Cr, D/E: ${(Number(f.totalDebt) / Math.max(Number(f.equity), 1)).toFixed(2)}x`
       ).join("\n");
 
       const qualNotes = notes.map(n => `• ${n.note} [${n.category}] (score impact: ${n.scoreImpact > 0 ? '+' : ''}${n.scoreImpact})`).join("\n");
@@ -503,7 +503,7 @@ Return ONLY valid JSON.`;
         const de = (Number(f.totalDebt) / Math.max(Number(f.equity), 1)).toFixed(2);
         const pm = ((Number(f.netProfit) / Math.max(Number(f.revenue), 1)) * 100).toFixed(1);
         const em = ((Number(f.ebitda) / Math.max(Number(f.revenue), 1)) * 100).toFixed(1);
-        return `| FY${f.year} | ₹${(Number(f.revenue)/10000000).toFixed(2)}Cr | ₹${(Number(f.ebitda)/10000000).toFixed(2)}Cr (${em}%) | ₹${(Number(f.netProfit)/10000000).toFixed(2)}Cr (${pm}%) | ₹${(Number(f.totalDebt)/10000000).toFixed(2)}Cr | ₹${(Number(f.equity)/10000000).toFixed(2)}Cr | ${de}x |`;
+        return `| FY${f.year} | ₹${(Number(f.revenue) / 10000000).toFixed(2)}Cr | ₹${(Number(f.ebitda) / 10000000).toFixed(2)}Cr (${em}%) | ₹${(Number(f.netProfit) / 10000000).toFixed(2)}Cr (${pm}%) | ₹${(Number(f.totalDebt) / 10000000).toFixed(2)}Cr | ₹${(Number(f.equity) / 10000000).toFixed(2)}Cr | ${de}x |`;
       }).join("\n");
 
       const latestFin = financials[0];
@@ -587,7 +587,7 @@ Comment on revenue growth, profitability trends, leverage ratios, debt service c
 ## 8. Loan Recommendation
 | Parameter | Details |
 |-----------|---------|
-| Proposed Limit | ₹${(suggestedLoan/10000000).toFixed(2)} Crores |
+| Proposed Limit | ₹${(suggestedLoan / 10000000).toFixed(2)} Crores |
 | Facility Type | Working Capital / Term Loan |
 | Tenor | ${tenorMonths} months |
 | Interest Rate | ${suggestedRate}% p.a. (${riskScore?.grade || "B"} category) |
@@ -731,7 +731,7 @@ The company operates in the ${company?.industry} sector with registered CIN: ${c
 
 ${financials.length > 0 ? `| Year | Revenue | EBITDA | Net Profit | D/E |
 |------|---------|--------|------------|-----|
-${financials.map(f => `| FY${f.year} | ₹${(Number(f.revenue)/10000000).toFixed(2)}Cr | ₹${(Number(f.ebitda)/10000000).toFixed(2)}Cr | ₹${(Number(f.netProfit)/10000000).toFixed(2)}Cr | ${(Number(f.totalDebt)/Math.max(Number(f.equity),1)).toFixed(2)}x |`).join("\n")}` : "No financial data on record."}
+${financials.map(f => `| FY${f.year} | ₹${(Number(f.revenue) / 10000000).toFixed(2)}Cr | ₹${(Number(f.ebitda) / 10000000).toFixed(2)}Cr | ₹${(Number(f.netProfit) / 10000000).toFixed(2)}Cr | ${(Number(f.totalDebt) / Math.max(Number(f.equity), 1)).toFixed(2)}x |`).join("\n")}` : "No financial data on record."}
 
 ## 4. Five Cs of Credit
 
@@ -758,7 +758,7 @@ ${notes.length > 0 ? notes.map(n => `- **${n.category}**: ${n.note} *(Score impa
 
 | Parameter | Details |
 |-----------|---------|
-| Proposed Limit | ₹${(loanAmt/10000000).toFixed(2)} Crores |
+| Proposed Limit | ₹${(loanAmt / 10000000).toFixed(2)} Crores |
 | Facility Type | Working Capital + Term Loan |
 | Tenor | ${tenor} months |
 | Interest Rate | ${rate}% p.a. |

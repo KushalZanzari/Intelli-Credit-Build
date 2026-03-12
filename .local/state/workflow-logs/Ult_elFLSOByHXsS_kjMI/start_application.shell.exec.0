@@ -1,0 +1,182 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+[1G[0K6:19:26 AM [express] serving on port 5000
+
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+6:19:30 AM [express] GET /api/companies 304 in 4ms :: [{"id":1,"name":"TechNova India Pvt Ltd","cin":"U72900MH2019PTC123456","industry":"Software Services","address":"Andheri East, Mumbai","createdAt":"2026-02-28T05:12:11.622Z"},{"id":2,"name":"Sunrise Manufacturing","cin":"U27100DL2010PTC098765","industry":"Manufacturing","address":"Okhla Industrial Estate, Delhi","createdAt":"2026-02-28T05:12:11.669Z"}]
+6:19:32 AM [express] GET /api/companies 200 in 2ms :: [{"id":1,"name":"TechNova India Pvt Ltd","cin":"U72900MH2019PTC123456","industry":"Software Services","address":"Andheri East, Mumbai","createdAt":"2026-02-28T05:12:11.622Z"},{"id":2,"name":"Sunrise Manufacturing","cin":"U27100DL2010PTC098765","industry":"Manufacturing","address":"Okhla Industrial Estate, Delhi","createdAt":"2026-02-28T05:12:11.669Z"}]
+6:19:46 AM [express] GET /api/companies 304 in 14ms :: [{"id":1,"name":"TechNova India Pvt Ltd","cin":"U72900MH2019PTC123456","industry":"Software Services","address":"Andheri East, Mumbai","createdAt":"2026-02-28T05:12:11.622Z"},{"id":2,"name":"Sunrise Manufacturing","cin":"U27100DL2010PTC098765","industry":"Manufacturing","address":"Okhla Industrial Estate, Delhi","createdAt":"2026-02-28T05:12:11.669Z"}]
+6:19:50 AM [express] GET /api/companies/2 200 in 4ms :: {"id":2,"name":"Sunrise Manufacturing","cin":"U27100DL2010PTC098765","industry":"Manufacturing","address":"Okhla Industrial Estate, Delhi","createdAt":"2026-02-28T05:12:11.669Z"}
+6:19:50 AM [express] GET /api/companies/2/financials 200 in 4ms :: [{"id":3,"companyId":2,"year":2023,"revenue":"15000000","ebitda":"3000000","netProfit":"1500000","totalDebt":"8000000","equity":"10000000","createdAt":"2026-02-28T05:12:11.673Z"}]
+6:19:51 AM [express] GET /api/companies/2/documents 200 in 2ms :: []
+6:19:58 AM [express] GET /api/companies/2/cam 200 in 3ms
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:28:07 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/companies/tabs/cam-tab.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:29:06 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/companies/tabs/documents-tab.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:29:53 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/companies/tabs/risk-tab.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:30:21 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/companies/tabs/cam-tab.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:31:15 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/companies/tabs/research-tab.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:31:27 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/companies/tabs/documents-tab.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m6:31:43 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/companies/create.tsx, /src/index.css[22m
